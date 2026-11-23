@@ -1,0 +1,1 @@
+window.DATA_TAMANHOS={"bairros.geojson": 143520, "bairros_indicadores.csv": 8797, "escolas.geojson": 301893, "escolas_publicas.csv": 88030, "ideb_referencias.json": 1754, "limite.geojson": 21781, "saresp_referencias.json": 603, "setores.geojson": 1022524, "setores_indicadores.csv": 128227};
