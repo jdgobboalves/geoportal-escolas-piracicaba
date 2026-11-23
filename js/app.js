@@ -168,7 +168,23 @@
   const camadaBai = L.geoJSON(BAI, { renderer: rCanvas.bairros, interactive: false, style: estiloBai }).addTo(mapa);
   const rotulosBai = L.layerGroup(BAI.features.map(f =>
     L.tooltip({ permanent: true, direction: "center", className: "rotulo-bai" })
-      .setLatLng(L.geoJSON(f).getBounds().getCenter()).setContent(titulo(f.properties.bairro))));
+      .setLatLng(L.geoJSON(f).getBounds().getCenter()).setContent(titulo(f.properties.bairro)))).addTo(mapa);
+  // nomes dos bairros sem sobreposição: os bairros maiores têm prioridade; os que colidem ficam ocultos
+  const ordemBai = rotulosBai.getLayers().map((t, i) => [t, BAI.features[i].properties.area_km2 || 0]).sort((a, b) => b[1] - a[1]).map(x => x[0]);
+  function arrumaRotulosBai() {
+    if (!mapa.hasLayer(rotulosBai)) return;
+    const usados = [];
+    ordemBai.forEach(t => {
+      const el = t.getElement(); if (!el) return;
+      el.style.visibility = "";
+      const r = el.getBoundingClientRect(), pad = 3;
+      const bate = usados.some(u => r.left - pad < u.right && r.right + pad > u.left && r.top - pad < u.bottom && r.bottom + pad > u.top);
+      if (bate) el.style.visibility = "hidden"; else usados.push(r);
+    });
+  }
+  mapa.on("zoomend moveend", arrumaRotulosBai);
+  rotulosBai.on("add", () => setTimeout(arrumaRotulosBai, 0));
+  setTimeout(arrumaRotulosBai, 0);
   // contorno de destaque do bairro escolhido (sempre visível)
   let destaqueBai = null;
 
@@ -199,7 +215,7 @@
     const i = classeDe(p[DS().v], DS().q); if (i < 0) return null;
     const cores = coresDe(estado.desemp); return cores[Math.min(i, cores.length - 1)];
   }
-  const raio = p => estado.tamMat ? Math.max(4, Math.min(18, 3 + Math.sqrt(p.mat_total || 0) / 2.2)) : 6.5;
+  const raio = p => estado.tamMat ? Math.max(3, Math.min(13, 2.5 + Math.sqrt(p.mat_total || 0) / 3)) : 4.5;
   function desenharEscolas() {
     camadaEsc.clearLayers();
     const fs = filtradas().map(f => ({ f, cor: corEscola(f.properties) }));
@@ -209,9 +225,9 @@
       const p = f.properties, [lon, lat] = f.geometry.coordinates, sel = estado.sel === p.co_inep;
       const fora = !noBairro({ bairro: p.bairro_ibge });
       const m = L.circleMarker([lat, lon], {
-        renderer: rCanvas.escolas, radius: cor ? raio(p) : 3.6,
+        renderer: rCanvas.escolas, radius: cor ? raio(p) : 2.8,
         fillColor: cor || CONFIG.cor_sem_dado, fillOpacity: fora ? 0.3 : cor ? 0.95 : 0.7,
-        color: sel ? "#111" : "#ffffff", weight: sel ? 3 : 1.3, opacity: fora ? 0.4 : 1,
+        color: sel ? "#111" : "#ffffff", weight: sel ? 2.5 : 1, opacity: fora ? 0.4 : 1,
       });
       const sv = estado.desemp ? `<br><b>${varDef(estado.desemp).curto}:</b> ${fmt(p[DS().v], casasDe(estado.desemp))}` : "";
       m.on({

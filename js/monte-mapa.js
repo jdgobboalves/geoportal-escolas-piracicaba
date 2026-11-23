@@ -95,6 +95,7 @@
         ctx.globalAlpha = 1; ctx.textAlign = "center"; ctx.textBaseline = "middle";
         ctx.font = `500 ${11 * k}px ${FONTE}`; ctx.lineJoin = "round";
         p.querySelectorAll(".rotulo-bai, .rotulo-esc").forEach(t => {
+          if (t.style.visibility === "hidden") return;
           const r = t.getBoundingClientRect(), x = r.left - r0.left + r.width / 2, y = r.top - r0.top + r.height / 2;
           if (x < 0 || y < 0 || x > W || y > H) return;
           ctx.strokeStyle = "rgba(255,255,255,.95)"; ctx.lineWidth = 3.5 * k; ctx.strokeText(t.textContent, x, y);
