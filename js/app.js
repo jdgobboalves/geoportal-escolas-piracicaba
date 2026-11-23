@@ -50,7 +50,7 @@
     df: { saresp: { v: "saresp_5ef_lp", classe: "fixa", so: false, q: [] },
           saeb: { v: "saeb_ai_mat", classe: "quantil", so: false, q: [] },
           ideb: { v: "ideb_ai", classe: "fixa", so: false, q: [] } },
-    terr: true, unidade: "setores", variavel: "renda_media", classe: "quantil", opacidade: 0.65, quebras: [],
+    terr: false, unidade: "setores", variavel: "renda_media", classe: "quantil", opacidade: 0.65, quebras: [],
     bairro: "", sel: null,
   };
 
@@ -163,9 +163,9 @@
     style: { color: "#2a2550", weight: 2.2, fill: false, opacity: 0.9 } }).addTo(mapa);
   const estiloBai = f => {
     const s = estado.bairro && estado.bairro === f.properties.bairro;
-    return { color: s ? "#c2457a" : "#3a3360", weight: s ? 3 : 1, opacity: s ? 1 : 0.7, fill: false, dashArray: s ? null : "3 3" };
+    return { color: s ? "#c2457a" : "#3a3360", weight: s ? 3 : 1.4, opacity: s ? 1 : 0.85, fill: false };
   };
-  const camadaBai = L.geoJSON(BAI, { renderer: rCanvas.bairros, interactive: false, style: estiloBai });
+  const camadaBai = L.geoJSON(BAI, { renderer: rCanvas.bairros, interactive: false, style: estiloBai }).addTo(mapa);
   const rotulosBai = L.layerGroup(BAI.features.map(f =>
     L.tooltip({ permanent: true, direction: "center", className: "rotulo-bai" })
       .setLatLng(L.geoJSON(f).getBounds().getCenter()).setContent(titulo(f.properties.bairro))));
@@ -542,7 +542,7 @@
     }
     const lim = [];
     if (on(camadaLim)) lim.push({ linha: "#2a2550", larg: 2.2, rotulo: "Limite municipal" });
-    if (on(camadaBai)) lim.push({ linha: "#3a3360", larg: 1, rotulo: "Bairros (IBGE)" });
+    if (on(camadaBai)) lim.push({ linha: "#3a3360", larg: 1.4, rotulo: "Limites dos bairros (IBGE)" });
     if (destaqueBai) lim.push({ linha: "#c2457a", larg: 3, rotulo: titulo(estado.bairro) });
     if (lim.length) lst.push({ id: "limites", titulo: "Limites", itens: lim, fonte: "IBGE – Censo 2022" });
     return lst;

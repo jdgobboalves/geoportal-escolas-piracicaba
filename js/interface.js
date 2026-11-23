@@ -44,7 +44,7 @@
     $("btn-mun-min").setAttribute("aria-expanded", String(!min));
   }
   $("btn-mun-min").onclick = () => minimizaMun(!$("painel-mun").classList.contains("minimizado"));
-  if (matchMedia("(max-width: 820px)").matches) minimizaMun(true);
+  minimizaMun(true);   // começa recolhido; o botão "+" expande
   if (window.L) { L.DomEvent.disableClickPropagation($("painel-mun")); L.DomEvent.disableScrollPropagation($("painel-mun")); }
 
   $("btn-menu").onclick = () => {

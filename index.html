@@ -44,7 +44,7 @@
       <!-- ---------- Aba CAMADAS ---------- -->
       <div id="painel-camadas" class="painel-aba">
         <!-- Tema 1 · Escolas públicas -->
-        <details class="tema" style="--cor-tema:var(--t-escolas)" open>
+        <details class="tema" style="--cor-tema:var(--t-escolas)">
           <summary>
             <span class="tema-ico"><svg viewBox="0 0 24 24"><path d="M3 10l9-5 9 5-9 5z M7 12.5V17c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5 M21 10v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
             <span class="tema-tit"><b>Escolas Públicas</b><small>Censo Escolar 2025 · INEP</small></span>
@@ -143,7 +143,7 @@
             <span class="tema-tit"><b>Socioeconomia</b><small>Censo 2022 por setor censitário ou bairro</small></span>
           </summary>
           <div class="tema-corpo">
-            <label class="chk"><input type="checkbox" id="chk-terr" checked><span>Mostrar no mapa</span></label>
+            <label class="chk"><input type="checkbox" id="chk-terr"><span>Mostrar no mapa</span></label>
             <div class="rotulo">Unidade territorial</div>
             <div class="segmentado" role="radiogroup" aria-label="Unidade territorial">
               <label><input type="radio" name="unidade" value="setores" checked><span>Setores censitários</span></label>
@@ -172,7 +172,7 @@
           </summary>
           <div class="tema-corpo">
             <label class="chk"><input type="checkbox" id="chk-lim" checked><span>Limite municipal</span></label>
-            <label class="chk"><input type="checkbox" id="chk-bai"><span>Contorno dos bairros</span></label>
+            <label class="chk"><input type="checkbox" id="chk-bai" checked><span>Limites dos bairros</span></label>
             <label class="chk"><input type="checkbox" id="chk-rot-bai"><span>Nomes dos bairros</span></label>
             <label class="rotulo" for="rng-fundo">Opacidade do mapa de fundo <span id="val-fundo">40%</span></label>
             <input type="range" id="rng-fundo" min="0" max="100" value="40">
@@ -405,8 +405,8 @@
   <script src="data/downloads.js"></script>
   <!-- aumente o ?v= ao alterar os arquivos, para o navegador não usar a versão em cache -->
   <script src="js/config.js?v=4"></script>
-  <script src="js/app.js?v=3"></script>
-  <script src="js/interface.js?v=3"></script>
+  <script src="js/app.js?v=4"></script>
+  <script src="js/interface.js?v=4"></script>
   <script src="js/monte-mapa.js?v=3"></script>
   <script src="js/analise.js?v=5"></script>
 </body>
