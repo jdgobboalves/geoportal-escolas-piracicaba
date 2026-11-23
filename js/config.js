@@ -59,8 +59,8 @@ const CONFIG = {
   // Indicadores do Censo 2022 (setores e bairros) – paleta sequencial em roxo
   cores_terr: ["#f3f0fa", "#d5cdee", "#a99bd8", "#7a66bd", "#4b3a8f"],
   variaveis: {
-    renda_media:     { nome: "Renda média do responsável", unidade: "R$", casas: 0, desc: "Rendimento nominal mensal médio das pessoas responsáveis pelos domicílios particulares permanentes ocupados." },
-    renda_mediana:   { nome: "Renda mediana do responsável", unidade: "R$", casas: 0, desc: "Valor do meio do rendimento das pessoas responsáveis pelos domicílios." },
+    renda_media:     { nome: "Renda média do responsável", unidade: "R$", casas: 0, desc: "Média do rendimento mensal das pessoas responsáveis pelos domicílios (só as que têm algum rendimento), em reais de 2022. Fonte: IBGE, Censo 2022." },
+    renda_mediana:   { nome: "Renda mediana do responsável", unidade: "R$", casas: 0, desc: "Valor do meio do rendimento mensal das pessoas responsáveis pelos domicílios (só as que têm algum rendimento), em reais de 2022." },
     renda_sm:        { nome: "Renda média em salários mínimos", unidade: "SM", casas: 2, desc: "Renda média do responsável dividida pelo salário mínimo de 2022 (R$ 1.212)." },
     alfabetizacao:   { nome: "Taxa de alfabetização (15 anos ou mais)", unidade: "%", casas: 1, desc: "Pessoas de 15 anos ou mais que sabem ler e escrever, em % da população dessa idade." },
     analfabetos_15m: { nome: "Pessoas não alfabetizadas (15 anos ou mais)", unidade: "pessoas", casas: 0, desc: "Número de pessoas de 15 anos ou mais que não sabem ler e escrever." },

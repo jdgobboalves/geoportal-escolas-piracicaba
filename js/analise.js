@@ -153,13 +153,13 @@
     const cx = casasTick(tx), cy = casasTick(ty);
     ty.forEach(v => { el("line", { x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v) }, grade); texto(eixo, m.l - 6, Y(v) + 4, fmt(v, cy), { "text-anchor": "end" }); });
     tx.forEach(v => { el("line", { x1: X(v), x2: X(v), y1: m.t, y2: H - m.b }, grade); texto(eixo, X(v), H - m.b + 16, fmt(v, cx), { "text-anchor": "middle" }); });
-    texto(eixo, (m.l + W - m.r) / 2, H - 4, `${dx.nome} (${dx.unidade})`, { "text-anchor": "middle" });
+    texto(eixo, (m.l + W - m.r) / 2, H - 4, `${dx.nome} no entorno da escola (${dx.unidade})`, { "text-anchor": "middle" });
     // pontos (anel de 2px na cor da superfície; alvo de 24px)
     pts.forEach(e => {
       const g = el("g", {}, svg), x = X(valX(e)), y = Y(e.p[st.y]);
       el("circle", { cx: x, cy: y, r: 12, fill: "transparent" }, g);
       el("circle", { class: "vis", cx: x, cy: y, r: 5, fill: REDES[e.p.dependencia].cor, stroke: "#fff", "stroke-width": 2 }, g);
-      interativo(g, G.titulo(e.p.nome), [[fmtY(e.p[st.y]), dy.curto, REDES[e.p.dependencia].cor], [fmtX(valX(e)), dx.nome.toLowerCase()],
+      interativo(g, G.titulo(e.p.nome), [[fmtY(e.p[st.y]), dy.curto, REDES[e.p.dependencia].cor], [fmtX(valX(e)), dx.nome.toLowerCase() + " no entorno"],
         [G.titulo(e.p.bairro_ibge || "") || "fora dos bairros", "· clique para ver no mapa"]], () => irParaEscola(e.p.co_inep));
     });
   }
@@ -190,7 +190,7 @@
       texto(eixo, cx, H - m.b + 16, `Faixa ${i + 1}`, { "text-anchor": "middle" });
       texto(eixo, cx, H - m.b + 30, `${fmtX(lim[i]).replace("R$ ", "")}–${fmtX(lim[i + 1]).replace("R$ ", "")}`, { "text-anchor": "middle" });
     });
-    texto(eixo, (m.l + W - m.r) / 2, H - 4, `${dx.nome} do setor (${dx.unidade})`, { "text-anchor": "middle" });
+    texto(eixo, (m.l + W - m.r) / 2, H - 4, `${dx.nome} no entorno da escola (${dx.unidade})`, { "text-anchor": "middle" });
     // linhas ligando as médias de cada rede + pontos
     series.forEach((r, si) => {
       const off = series.length > 1 ? (si - (series.length - 1) / 2) * 12 : 0;
@@ -203,7 +203,7 @@
         el("circle", { cx: x, cy: y, r: 12, fill: "transparent" }, g);
         el("circle", { class: "vis", cx: x, cy: y, r: 5.5, fill: REDES[r].cor, stroke: "#fff", "stroke-width": 2 }, g);
         interativo(g, `${REDES[r].rotulo} · faixa ${i + 1}`, [[fmtY(d.m), `média de ${dy.curto}`, REDES[r].cor], [fmt(d.n), d.n === 1 ? "escola" : "escolas"],
-          [`${fmtX(lim[i])} a ${fmtX(lim[i + 1])}`, "no setor"]]);
+          [`${fmtX(lim[i])} a ${fmtX(lim[i + 1])}`, "no entorno"]]);
       });
     });
   }
@@ -290,7 +290,7 @@
       { k: "bairro", t: "Bairro (IBGE)", v: e => G.titulo(e.p.bairro_ibge || "") },
       { k: "mat", t: "Matrículas", v: e => e.p.mat_total, n: true, f: v => fmt(v) },
       { k: "y", t: dy.curto, v: e => e.p[st.y], n: true, f: v => fmtY(v) },
-      { k: "x", t: dx.nome, v: e => valX(e), n: true, f: v => fmtX(v) },
+      { k: "x", t: `${dx.nome} no entorno da escola`, dica: "Dado do Censo 2022 para a pequena área (setor censitário) onde fica o prédio da escola. Não é a situação das famílias dos alunos, que podem morar em outros lugares.", v: e => valX(e), n: true, f: v => fmtX(v) },
     ];
     const c = cols.find(x => x.k === st.ord.col) || cols[4];
     const lin = es.slice().sort((a, b) => {
@@ -301,7 +301,7 @@
     const t = $("da-tabela"); t.innerHTML = "";
     const th = t.createTHead().insertRow();
     cols.forEach(col => {
-      const h = document.createElement("th"); h.textContent = col.t; if (col.n) h.className = "n";
+      const h = document.createElement("th"); h.textContent = col.t; if (col.n) h.className = "n"; if (col.dica) h.title = col.dica;
       h.setAttribute("scope", "col"); h.tabIndex = 0;
       if (col.k === st.ord.col) h.setAttribute("aria-sort", st.ord.dir > 0 ? "ascending" : "descending");
       const ordena = () => { st.ord = { col: col.k, dir: st.ord.col === col.k ? -st.ord.dir : (col.n ? -1 : 1) }; tabela(recorte()); };
@@ -360,7 +360,7 @@
     sb.onchange = e => { st.bairro = e.target.value; desenhar(); };
     sy.onchange = e => { st.y = e.target.value; if (st.ord.col === "y") st.ord.dir = -1; desenhar(); };
     sx.onchange = e => { st.x = e.target.value; desenhar(); };
-    document.addEventListener("aba-analise", () => requestAnimationFrame(desenhar));
+    document.addEventListener("aba-analise", () => setTimeout(desenhar, 0));
     let tr; addEventListener("resize", () => { clearTimeout(tr); tr = setTimeout(desenhar, 150); });
     $("pagina-analise").addEventListener("scroll", escondeTip);
   }

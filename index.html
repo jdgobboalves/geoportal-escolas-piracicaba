@@ -256,7 +256,7 @@
             <option value="">Estadual e municipal</option><option value="Estadual">Rede estadual</option><option value="Municipal">Rede municipal</option></select></label>
           <label><span>Bairro</span><select id="da-bairro"><option value="">Toda Piracicaba</option></select></label>
           <label><span>Indicador de desempenho</span><select id="da-y"></select></label>
-          <label><span>Variável do entorno (setor censitário)</span><select id="da-x"></select></label>
+          <label><span>Variável do entorno da escola</span><select id="da-x"></select></label>
         </div>
 
         <section class="dash-tiles" id="da-tiles" aria-live="polite"></section>
@@ -292,7 +292,7 @@
             <h3>Escolas do recorte</h3>
             <button id="da-csv" class="btn-dl">Baixar CSV</button>
           </div>
-          <p class="dash-sub">Clique no título de uma coluna para ordenar e no nome da escola para vê-la no mapa.</p>
+          <p class="dash-sub">Clique no título de uma coluna para ordenar e no nome da escola para vê-la no mapa. A coluna “no entorno da escola” mostra o dado do Censo 2022 da pequena área onde fica o prédio da escola. Ela não descreve as famílias dos alunos, que podem morar em outros bairros.</p>
           <div class="dash-tabela"><table id="da-tabela" class="tab-dash"></table></div>
         </article>
         <p class="nota">O entorno é o setor censitário (pequena área do Censo 2022) onde fica a escola. Os alunos podem morar em outras áreas, então use os gráficos como um retrato do território, não como explicação do resultado.</p>
@@ -404,10 +404,10 @@
   <script src="data/ideb_referencias.js"></script>
   <script src="data/downloads.js"></script>
   <!-- aumente o ?v= ao alterar os arquivos, para o navegador não usar a versão em cache -->
-  <script src="js/config.js?v=4"></script>
+  <script src="js/config.js?v=5"></script>
   <script src="js/app.js?v=5"></script>
   <script src="js/interface.js?v=4"></script>
   <script src="js/monte-mapa.js?v=4"></script>
-  <script src="js/analise.js?v=5"></script>
+  <script src="js/analise.js?v=7"></script>
 </body>
 </html>
